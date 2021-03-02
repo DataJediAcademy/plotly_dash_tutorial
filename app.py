@@ -7,7 +7,8 @@ from dash.dependencies import Input, Output
 
 import dash
 import pandas as pd
-
+# -----------------------------------------------------------------------------------------------------
+# Start our app and import external stylesheet
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__,
@@ -15,8 +16,12 @@ app = dash.Dash(__name__,
                 title='Data Jedi Covid Dashboard',
                 meta_tags=[{"name": "viewport", "content": "width=device-width"}]
                 )
-
+# -----------------------------------------------------------------------------------------------------
+# Import and clean data
 covid_df = pd.read_csv("./data/owid-covid-data.csv")
+
+# -----------------------------------------------------------------------------------------------------
+# Create function that takes data and plots it
 
 
 def plot_figure(start_date, end_date, data=covid_df, location='Nigeria'):
@@ -29,6 +34,9 @@ def plot_figure(start_date, end_date, data=covid_df, location='Nigeria'):
                       title=f"{location} Covid-19 New Cases per million",
                       )
     return fig
+
+# -----------------------------------------------------------------------------------------------------
+# App layout
 
 
 app.layout = html.Div(
@@ -81,6 +89,8 @@ app.layout = html.Div(
         ),
     ]
 )
+# -----------------------------------------------------------------------------------------------------
+# Create callbacks to make our app interactive
 
 
 @app.callback(
@@ -91,6 +101,9 @@ app.layout = html.Div(
 )
 def update_risk_graph(start_date, end_date):
     return plot_figure(start_date=start_date, end_date=end_date)
+
+# -----------------------------------------------------------------------------------------------------
+# Launch our app on our local machine
 
 
 if __name__ == '__main__':
